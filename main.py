@@ -7,7 +7,7 @@ import wandb
 import hydra
 from omegaconf import DictConfig
 
-_steps = [
+default_steps = [
     "download",
     "basic_cleaning",
     "data_check",
@@ -30,7 +30,7 @@ def go(config: DictConfig):
 
     # Steps to execute
     steps_parser = config['main']['steps']
-    active_steps = steps_parser.split(",") if steps_parser != "all" else _steps
+    active_steps = steps_parser.split(",") if steps_parser != "all" else default_steps
 
     # Move to a temporary directory
     with tempfile.TemporaryDirectory() as tmp_dir:
