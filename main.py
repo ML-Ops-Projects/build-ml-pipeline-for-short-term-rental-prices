@@ -38,13 +38,14 @@ def go(config: DictConfig):
         if "download" in active_steps:
             # Download file and load in W&B
             _ = mlflow.run(
-                f"{config['main']['components_repository']}/get_data",
-                "main",
-                parameters={
-                    "sample": config["etl"]["sample"],
-                    "artifact_name": "sample.csv",
-                    "artifact_type": "raw_data",
-                    "artifact_description": "Raw file as downloaded"
+                    uri=f"{config['main']['components_repository']}/get_data",
+                    entry_point="main",
+                    version="main",
+                    parameters={
+                        "sample": config["etl"]["sample"],
+                        "artifact_name": "sample.csv",
+                        "artifact_type": "raw_data",
+                        "artifact_description": "Raw file as downloaded"
                 },
             )
 
