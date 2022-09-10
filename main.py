@@ -59,9 +59,9 @@ def go(config: DictConfig):
                                 "output_artifact":"clean_sample.csv",
                                 "output_type":"clean_sample",
                                 "output_description":"Data with outliers and NaN's removed",
-                                "min_price":config['etf']['min_price'],
-                                "max_price":config['etf']['max_price'],
-                                "outliers_percentile_threshold":config['etf']['outliers_percentile_threshold']
+                                "min_price":config['etl']['min_price'],
+                                "max_price":config['etl']['max_price'],
+                                "outliers_percentile_threshold":config['etl']['outliers_percentile_threshold']
                                 }
                         )
 
