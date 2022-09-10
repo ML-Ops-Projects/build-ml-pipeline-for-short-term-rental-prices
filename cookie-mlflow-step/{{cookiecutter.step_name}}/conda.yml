@@ -4,5 +4,5 @@ channels:
   - defaults
 dependencies:
   - pip=20.3.3
+  - wandb=0.12.16
   - pip:
-      - wandb==0.10.31
