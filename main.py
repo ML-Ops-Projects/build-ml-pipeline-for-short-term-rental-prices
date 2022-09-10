@@ -45,7 +45,7 @@ def go(config: DictConfig):
                         "sample": config["etl"]["sample"],
                         "artifact_name": "sample.csv",
                         "artifact_type": "raw_data",
-                        "artifact_description": "Raw file as downloaded"
+                        "artifact_description": "Raw file as downloaded",
                         }
                     )
 
@@ -61,7 +61,7 @@ def go(config: DictConfig):
                                 "output_description":"Data with outliers and NaN's removed",
                                 "min_price":config['etl']['min_price'],
                                 "max_price":config['etl']['max_price'],
-                                "outliers_percentile_threshold":config['etl']['outliers_percentile_threshold']
+                                "outliers_percentile_threshold":config['etl']['outliers_percentile_threshold'],
                                 }
                         )
 
