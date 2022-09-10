@@ -50,7 +50,7 @@ def go(config: DictConfig):
                     )
 
         if "basic_cleaning" in active_steps:
-            basic_cleaning_URI = os.path.join(hydra.utils.get_original_cw(), 'src', 'basic_cleaning')
+            basic_cleaning_URI = os.path.join(hydra.utils.get_original_cwd(), 'src', 'basic_cleaning')
             _ = mlflow.run(
                     uri=basic_cleaning_URI,
                     entry_point='main',
