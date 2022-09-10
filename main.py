@@ -53,7 +53,8 @@ def go(config: DictConfig):
 
         if "basic_cleaning" in active_steps:
             basic_cleaning_URI = os.path.join(hydra.utils.get_original_cwd(), 'src', 'basic_cleaning')
-            assert os.path.exists(basic_cleaning_URI)
+            if os.path.exists(basic_cleaning_URI):
+                raise Exception(f" IT EXISTS: {basic_cleaning_URI}")
             _ = mlflow.run(
                     uri=basic_cleaning_URI,
                     entry_point='main',
