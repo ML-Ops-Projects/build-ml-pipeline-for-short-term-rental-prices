@@ -56,6 +56,7 @@ def go(config: DictConfig):
             _ = mlflow.run(
                     uri=basic_cleaning_URI,
                     entry_point='main',
+                    version="main",
                     parameters = {
                                 "input_artifact" : "sample.csv:latest",
                                 "output_artifact" : "clean_sample.csv",
