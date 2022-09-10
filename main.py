@@ -28,7 +28,7 @@ def go(config: DictConfig):
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
     # Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
-    os.environ["HYDRA_FULL_ERROR"] = 1
+    os.environ["HYDRA_FULL_ERROR"] = '1'
 
     # Steps to execute
     steps_parser = config['main']['steps']
