@@ -24,40 +24,47 @@ def test_column_names(data):
         "availability_365",
     ]
 
-    these_columns = data.columns.values
+    actual_columns = data.columns.values
 
     # This also enforces the same order
-    assert list(expected_colums) == list(these_columns)
+    assert list(expected_colums) == list(actual_columns)
 
 
 def test_neighborhood_names(data):
 
-    known_names = ["Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"]
+    expected_neighborhoods = ["Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"]
 
-    neigh = set(data['neighbourhood_group'].unique())
+    actual_neighborhoods = set(data['neighbourhood_group'].unique())
 
     # Unordered check
-    assert set(known_names) == set(neigh)
+    assert set(expected_neighborhoods) == set(actual_neighborhoods)
 
 
 def test_proper_boundaries(data: pd.DataFrame):
     """
     Test proper longitude and latitude boundaries for properties in and around NYC
     """
-    idx = data['longitude'].between(-74.25, -73.50) & data['latitude'].between(40.5, 41.2)
-
-    assert np.sum(~idx) == 0
+    is_outside_nyc = ~data['longitude'].between(-74.25, -73.50) & data['latitude'].between(40.5, 41.2)
+    assert np.sum(is_outside_nyc) == 0
 
 
 def test_similar_neigh_distrib(data: pd.DataFrame, ref_data: pd.DataFrame, kl_threshold: float):
     """
     Apply a threshold on the KL divergence to detect if the distribution of the new data is
     significantly different than that of the reference dataset
+    
+    Nota: 
+    KL (Kullback–Leibler) divergence is a measure of similarity between 2 distributions
+    
     """
-    dist1 = data['neighbourhood_group'].value_counts().sort_index()
-    dist2 = ref_data['neighbourhood_group'].value_counts().sort_index()
+    dist_1 = data['neighbourhood_group'].value_counts().sort_index()
+    dist_2 = ref_data['neighbourhood_group'].value_counts().sort_index()
 
-    assert scipy.stats.entropy(dist1, dist2, base=2) < kl_threshold
+    kl_divergence = scipy.stats.entropy(dist_1, dist_2, base=2)
+    
+    similar_distributions = kl_divergence < kl_threshold
+    
+    assert similar_distributions
 
 
 ########################################################
