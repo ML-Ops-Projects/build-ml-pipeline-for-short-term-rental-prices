@@ -10,8 +10,9 @@ import pandas as pd
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-def go(args):
 
+def go(args):
+    
     run = wandb.init(job_type="basic_cleaning")
     run.config.update(args)
 
@@ -49,7 +50,8 @@ def go(args):
     # Filtering minimum_nights outliers
     logger.info('Data Cleaning: Filtering outliers in "minimum_nights"')
     minimun_nights_stats = rentals_data['minimum_nights'].describe(percentiles=custom_percentiles)
-    minimum_nights_max = minimun_nights_stats[args.outliers_percentile_threshold]
+    outlier_str_locator = f"{round(args.outliers_percentile_threshold)}%"
+    minimum_nights_max = minimun_nights_stats[outlier_str_locator]
     is_not_outlier_minimum_nights = rentals_data['minimum_nights'] <= minimum_nights_max
 
     n_rows_before = rentals_data.shape[0]
@@ -79,57 +81,49 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="A very basic data cleaning")
 
+    parser.add_argument("input_artifact", type=str,
+                        help="the name, i.e path of the input artifact, with ':latest' if using W&B",
+                        )
+
 
     parser.add_argument(
-        "--input_artifact", 
-        # type=str,
-        # help="the name/path of the input artifact, with ':latest' if using W&B",
-        # required=True
+        "output_artifact", 
+        type=str,
+        help="the name, i.e path of the output articat",
     )
 
     parser.add_argument(
-        "--output_artifact", 
-        # type=str,
-        # help="the name/path of the output articat",
-        # required=True
+        "output_type", 
+        type= str,
+        help=" The type of the ouput",
     )
 
     parser.add_argument(
-        "--output_type", 
-        # type= str,
-        # help=" The type of the ouput",
-        # required=True
+        "output_description", 
+        type=str,
+        help="The description of the output",
     )
 
     parser.add_argument(
-        "--output_description", 
-        # type=str,
-        # help="The description of the output",
-        # required=True
+        "min_price", 
+        type=float,
+        help="The minimum price",
     )
 
     parser.add_argument(
-        "--min_price", 
-        # type=float,
-        # help="The minimum price (below = Outliers)",
-        # required=True
+        "max_price", 
+        type=float,
+        help="The maximum price)",
     )
 
     parser.add_argument(
-        "--max_price", 
-        # type=float,
-        # help="The maximum price (above = outliers)",
-        # required=True
-    )
-
-    parser.add_argument(
-        "--outliers_percentile_threshold", 
-        # type=float,
-        # help="The percentile above which values minimum_nights will be discarded as outliers",
-        # required=True
+        "outliers_percentile_threshold", 
+        type=float,
+        help="The percentile above which values minimum_nights will be discarded as outliers",
     )
     
 
     args = parser.parse_args()
 
     go(args)
+

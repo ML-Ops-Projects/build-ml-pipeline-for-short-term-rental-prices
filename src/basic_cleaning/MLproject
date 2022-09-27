@@ -6,27 +6,27 @@ entry_points:
     parameters:
 
       input_artifact:
-        description: ## ADD DESCRIPTION
+        description: The name of the artifact to use as input
         type: string
 
       output_artifact:
-        description: ## ADD DESCRIPTION
+        description: The name of the output artifact
         type: string
 
       output_type:
-        description: ## ADD DESCRIPTION
+        description: The type of the output artifact
         type: string
 
       output_description:
-        description: ## ADD DESCRIPTION
+        description: The data without outliers & NaNs
         type: string
 
       min_price:
-        description: ## ADD DESCRIPTION
+        description: The minimum price, below which observation are considered outliers
         type: string
 
       max_price:
-        description: ## ADD DESCRIPTION
+        description: The maximum price, above which observation are considered outliers
         type: string
 
       outliers_percentile_threshold:
@@ -34,10 +34,4 @@ entry_points:
         type: float
 
     command: >-
-        python run.py  --input_artifact {input_artifact} \  
-                       --output_artifact {output_artifact} \  
-                       --output_type {output_type} \  
-                       --output_description {output_description} \  
-                       --min_price  min_price} \  
-                       --max_price {max_price} \
-                       --outliers_percentile_threshold {outliers_percentile_threshold}
+        python run.py  {input_artifact}  {output_artifact} {output_type}  {output_description} {min_price} {max_price} {outliers_percentile_threshold}

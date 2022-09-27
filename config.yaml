@@ -12,9 +12,11 @@ main:
   steps: all
 etl:
   sample: "sample1.csv"
-  min_price: 10  # dollars
+  # min_price in dollars
+  min_price: 10  
+  # max_price in dollars
   max_price: 350  # dollars
-  outliers_percentile_threshold: 0.95 
+  outliers_percentile_threshold: .95 
 data_check:
   kl_threshold: 0.2
 modeling:
@@ -42,3 +44,4 @@ modeling:
     max_features: 0.5
     # DO not change the following
     oob_score: true
+       

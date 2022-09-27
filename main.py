@@ -52,20 +52,22 @@ def go(config: DictConfig):
                     )
 
         if "basic_cleaning" in active_steps:
+            
             basic_cleaning_URI = os.path.join(hydra.utils.get_original_cwd(), 'src', 'basic_cleaning')
+            
             _ = mlflow.run(
                     uri=basic_cleaning_URI,
-                    entry_point='main',
-                    parameters = {
-                                "input_artifact" : "sample.csv:latest",
-                                "output_artifact" : "clean_sample.csv",
-                                "output_type" : "clean_sample",
-                                "output_description" : "Data with outliers and NaN removed",
-                                "min_price" : config['etl']['min_price'],
-                                "max_price"  :config['etl']['max_price'],
-                                "outliers_percentile_threshold" : config['etl']['outliers_percentile_threshold'],
-                                },
-                        )
+                    entry_point="main",
+                    parameters = {"input_artifact" : "sample.csv:latest",
+                                    "output_artifact" : "clean_sample.csv",
+                                    "output_type" : "clean_sample",
+                                    "output_description" : "Data with outliers and NaN removed",
+                                    "min_price" : config['etl']['min_price'],
+                                    "max_price"  :config['etl']['max_price'],
+                                    "outliers_percentile_threshold" : config['etl']['outliers_percentile_threshold'],
+                        },
+                    )
+            
 
         if "data_check" in active_steps:
             ##################
